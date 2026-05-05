@@ -1,5 +1,8 @@
 # ChefGenie
 
+> [!NOTE]
+> **Live Demo:** You can try out the live application at [chef-genie-one.vercel.app](https://chef-genie-one.vercel.app/) 
+
 ## Overview
 ChefGenie is an intelligent web application designed to classify food images into specific categories: pizza, steak, and sushi. The application features a dark-themed user interface that communicates with a remote deep learning backend. The backend runs a transfer-learned EfficientNet model architecture hosted on Hugging Face Spaces to perform fast, accurate image classification.
 
