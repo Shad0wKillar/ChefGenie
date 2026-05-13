@@ -3,6 +3,13 @@
 > [!NOTE]
 > **Live Demo:** You can try out the live application at [chef-genie-one.vercel.app](https://chef-genie-one.vercel.app/) 
 
+> [!Note]
+> **Model at HuggingFace:** The models are present on my huggingface account.
+> 1. [Efficientnet-b1](https://huggingface.co/Shad0wKillar/efficientnet-b1)
+> 2. [Efficientnet-b3](https://huggingface.co/Shad0wKillar/efficientnet-b3)
+> 3. [Efficientnet-b5](https://huggingface.co/Shad0wKillar/efficientnet-b5)
+> 4. [Efficientnet-b7](https://huggingface.co/Shad0wKillar/efficientnet-b7)
+
 ## Overview
 ChefGenie is an intelligent web application designed to classify food images into specific categories: pizza, steak, and sushi. The application features a dark-themed user interface that communicates with a remote deep learning backend. The backend runs a transfer-learned EfficientNet model architecture hosted on Hugging Face Spaces to perform fast, accurate image classification.
 
