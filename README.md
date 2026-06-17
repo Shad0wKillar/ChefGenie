@@ -1,86 +1,145 @@
+<div align="center">
+
 # ChefGenie
 
-> [!NOTE]
-> **Live Demo:** You can try out the live application at [chef-genie-one.vercel.app](https://chef-genie-one.vercel.app/) 
+**An AI-powered food classifier that turns a food photo into an instant pizza, steak, or sushi prediction.**
 
-> [!Note]
-> **Model at HuggingFace:** The models are present on my huggingface account.
-> 1. [Efficientnet-b1](https://huggingface.co/Shad0wKillar/efficientnet-b1)
-> 2. [Efficientnet-b3](https://huggingface.co/Shad0wKillar/efficientnet-b3)
-> 3. [Efficientnet-b5](https://huggingface.co/Shad0wKillar/efficientnet-b5)
-> 4. [Efficientnet-b7](https://huggingface.co/Shad0wKillar/efficientnet-b7)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-chef--genie--one.vercel.app-00C2FF?style=for-the-badge)](https://chef-genie-one.vercel.app/)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=nextdotjs)
+![React](https://img.shields.io/badge/React-19-149ECA?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Spaces-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
+
+[Live Demo](https://chef-genie-one.vercel.app/) - [Models](#model-zoo) - [Features](#features) - [Tech Stack](#technical-stack) - [API](#api-and-backend-specification) - [Run Locally](#installation-and-development)
+
+</div>
+
+## Product Preview
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="assets_github/screenshot_20260617_124939.png" alt="ChefGenie upload screen with EfficientNet model selection and drag-and-drop upload area" />
+    </td>
+    <td width="50%">
+      <img src="assets_github/screenshot_20260617_125248.png" alt="ChefGenie prediction screen showing a pizza classification with confidence scores" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Upload-first workflow</strong></td>
+    <td align="center"><strong>Confidence-rich prediction results</strong></td>
+  </tr>
+</table>
 
 ## Overview
-ChefGenie is an intelligent web application designed to classify food images into specific categories: pizza, steak, and sushi. The application features a dark-themed user interface that communicates with a remote deep learning backend. The backend runs a transfer-learned EfficientNet model architecture hosted on Hugging Face Spaces to perform fast, accurate image classification.
+
+ChefGenie is a dark, polished web application for classifying food images into three categories: **pizza**, **steak**, and **sushi**. The frontend delivers a smooth upload and results experience, while a remote transfer-learned EfficientNet backend hosted on Hugging Face Spaces handles inference.
+
+The app is designed around a simple flow: choose an EfficientNet model variant, upload a food image, send it to the model endpoint, and receive a confidence breakdown with an animated assistant-style response.
+
+## Model Zoo
+
+The trained EfficientNet variants are published on Hugging Face:
+
+| Model | Hugging Face repository |
+| --- | --- |
+| EfficientNet-B1 | [Shad0wKillar/efficientnet-b1](https://huggingface.co/Shad0wKillar/efficientnet-b1) |
+| EfficientNet-B3 | [Shad0wKillar/efficientnet-b3](https://huggingface.co/Shad0wKillar/efficientnet-b3) |
+| EfficientNet-B5 | [Shad0wKillar/efficientnet-b5](https://huggingface.co/Shad0wKillar/efficientnet-b5) |
+| EfficientNet-B7 | [Shad0wKillar/efficientnet-b7](https://huggingface.co/Shad0wKillar/efficientnet-b7) |
 
 ## Features
-- **Model Selection**: Dynamically switch between model configurations (defaulting to the B1 architecture variant) prior to evaluation.
-- **Drag-and-Drop Image Upload**: A robust image selection container supporting direct uploads or click-to-select behavior.
-- **Asynchronous Inference Tracking**: Real-time interface updates, including a custom secondary status message that triggers if the backend container requires cold-start initialization.
-- **Interactive Metrics Display**: Visual breakdown of classification metrics once prediction results are received.
-- **Fluid UI Animations**: Micro-interactions, fade states, and loading indicators driven by Framer Motion.
+
+- **EfficientNet model selection**: Switch between available model variants before running inference.
+- **Drag-and-drop image upload**: Upload food images through a dedicated drop zone with click-to-select fallback behavior.
+- **Remote AI inference**: Send multipart image payloads directly to a hosted Hugging Face Spaces prediction endpoint.
+- **Cold-start aware status updates**: Show users a secondary loading state when the backend container needs time to initialize.
+- **Visual confidence breakdown**: Display class probabilities with readable labels, percentages, and progress indicators.
+- **Animated dark UI**: Use Framer Motion, Lucide icons, and Tailwind CSS for a responsive interface with polished micro-interactions.
 
 ## Technical Stack
-- **Framework**: Next.js 16 (App Router architecture)
-- **Library**: React 19 (Client-side hydration handles extension compatibility safely)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4 with native CSS variables
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Dependencies Management**: Monitored and configured via pnpm workspaces
+
+| Layer | Technology |
+| --- | --- |
+| Framework | Next.js 16 App Router |
+| UI Library | React 19 |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS v4 |
+| Motion | Framer Motion |
+| Components | Radix UI, shadcn, Lucide React |
+| Package Manager | pnpm |
+| Model Backend | Transfer-learned EfficientNet on Hugging Face Spaces |
 
 ## Directory Structure
-- `src/app/page.tsx`: The core entry page managing layout columns, structural state mounting, and high-level component organization.
-- `src/hooks/use-prediction.tsx`: A custom React hook containing state variables for the file data, model name, loading lifecycle, and HTTP requests.
-- `src/components/image-upload.tsx`: Interface handling file ingestion and initial format processing.
-- `src/components/model-selector.tsx`: Dropdown or button group layout facilitating adjustments to model configurations.
-- `src/components/genie-response.tsx` & `results-display.tsx`: Analytical readouts displaying classification confidence structures.
+
+```text
+src/app/page.tsx
+  Main application screen, layout composition, and top-level UI flow.
+
+src/hooks/use-prediction.tsx
+  Prediction state, selected model, loading lifecycle, and backend requests.
+
+src/components/image-upload.tsx
+  Drag-and-drop upload handling, file preview, and input validation surface.
+
+src/components/model-selector.tsx
+  EfficientNet variant selector.
+
+src/components/genie-response.tsx
+src/components/results-display.tsx
+  Assistant response messaging and classification confidence visualization.
+
+assets_github/*.png
+  README screenshots and project preview assets.
+```
 
 ## Installation and Development
 
 ### Prerequisites
-Ensure that Node.js and the pnpm package manager are installed.
 
-### Execution Instructions
-1. Navigate to the root folder containing the project files:
-   ```bash
-   cd ChefGenie
-   ```
+- Node.js
+- pnpm
 
-2. Install the production and development dependencies:
-   ```bash
-   pnpm install
-   ```
+### Run Locally
 
-3. Initialize the local development server:
-   ```bash
-   pnpm dev
-   ```
-   Open http://localhost:3000 inside the web browser to access the interface.
+```bash
+pnpm install
+pnpm dev
+```
 
-4. Compile and bundle optimization assets for a production deployment:
-   ```bash
-   pnpm build
-   ```
+Open `http://localhost:3000` in your browser.
 
-5. Run the compiled production build locally:
-   ```bash
-   pnpm start
-   ```
+### Production Build
+
+```bash
+pnpm build
+pnpm start
+```
 
 ## API and Backend Specification
-The client communicates directly with a deployed model endpoint using multipart form transmission.
 
-### Endpoint Definition
-- **URL**: `https://shad0wkillar-efficientnet-transferlearned.hf.space/predict`
-- **Method**: `POST`
-- **Query String Parameter**: `model_type` (string value designating architectural variant, e.g., `b1, b3, b5 and b7`)
+The client communicates with a deployed model endpoint using multipart form data.
+
+| Field | Value |
+| --- | --- |
+| URL | `https://shad0wkillar-efficientnet-transferlearned.hf.space/predict` |
+| Method | `POST` |
+| Query parameter | `model_type` |
+| Supported model examples | `b1`, `b3`, `b5`, `b7` |
+| File field | `file` |
 
 ### Request Payload
-The body must consist of standard `FormData` appending the image asset under the key designation `file`.
 
-### Response Payload Structure
-The endpoint evaluates and distributes confidence floats mapped to the respective culinary indices:
+```ts
+const formData = new FormData();
+formData.append("file", imageFile);
+```
+
+### Response Payload
+
+The backend returns confidence scores for the supported food classes:
+
 ```json
 {
   "pizza": 0.852,
@@ -88,3 +147,7 @@ The endpoint evaluates and distributes confidence floats mapped to the respectiv
   "sushi": 0.034
 }
 ```
+
+## License
+
+This project is released under the license included in [LICENSE](./LICENSE).
